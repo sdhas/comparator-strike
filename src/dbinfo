@@ -1,0 +1,66 @@
+-- Database: postgres
+
+-- DROP DATABASE postgres;
+
+CREATE DATABASE postgres
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'English_United States.1252'
+       LC_CTYPE = 'English_United States.1252'
+       CONNECTION LIMIT = -1;
+
+COMMENT ON DATABASE postgres
+  IS 'default administrative connection database';
+
+  
+-- Schema: xltodb
+
+-- DROP SCHEMA xltodb;
+
+CREATE SCHEMA xltodb
+  AUTHORIZATION postgres;
+
+
+-- Table: xltodb.specification
+
+-- DROP TABLE xltodb.specification;
+
+CREATE TABLE xltodb.specification
+(
+  id text NOT NULL,
+  brand text,
+  mpn text,
+  gtin text,
+  title text,
+  minprice text,
+  sample text,
+  otherspec text,
+  url text,
+  urlid text NOT NULL,
+  CONSTRAINT pk_specification PRIMARY KEY (id),
+  CONSTRAINT uk_urlid_specification UNIQUE (urlid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE xltodb.specification
+  OWNER TO postgres;
+
+  
+  -- Table: xltodb.newurls
+
+-- DROP TABLE xltodb.newurls;
+
+CREATE TABLE xltodb.newurls
+(
+    url text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT newurls_pkey PRIMARY KEY (url)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE xltodb.newurls
+    OWNER to postgres;
